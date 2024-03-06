@@ -1,0 +1,82 @@
+extends ../../layout/defaultLayout.pug
+include ../../mixins/form-search.pug
+include ../../mixins/filterStatus.pug
+include ../../mixins/form-change-status.pug
+include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
+
+block main 
+    h1.mb-4 Thêm mới sản phẩm 
+    +alert-success(4000)
+    +alert-error(4000)
+    +alert-warning(4000)
+    form(
+        action="/admin/product/edit"
+        id="form-edit-product"
+        method="POST"
+        enctype="multipart/form-data"
+    )
+        .form-group 
+            label(for="title") Tiêu đề
+            input.form-control(
+                type="text" name="title" id="title" value=Product.title
+            )
+        .form-group 
+            label(for="description") Mô tả 
+            textarea.form-control(
+                name="description" id="description" rows="5" cols="10" 
+            ) !{Product.description}
+        .form-group
+            label(for="price") Giá
+            input.form-control(
+                type="number" name="price" id="price" min="0" value=Product.price
+            )
+        .form-group 
+            label(for="discountPercentage") Phần trăm giảm giá
+            input.form-control(
+                type="number" name="discountPercentage" id="discountPercentage" min="0" value=Product.discountPercentage
+            )
+        .form-group
+            label(for="stock") Số lượng
+            input.form-control(
+                type="number" name="stock" id="stock" min="0" value=Product.stock
+            )
+        .form-group 
+            label(for="rating") Đánh giá
+            input.form-control(
+                type="number" name="rating" id="rating" min="0" max-value="5" value=Product.rating
+            )
+        .form-group 
+            label(for="category") Thể loại
+            input.form-control(
+                type="text" name="category" id="category" value=Product.category
+            )
+        .form-group 
+            label(for="thumbnail") Ảnh thumbnail
+            input.form-control(
+                type="file" name="thumbnail" id="thumbnail" value=Product.thumbnail multiple=""
+            ) 
+        .form-group 
+            label(for="images") Ảnh minh hoạ
+            input.form-control(
+                type="file" name="images" id="images" 
+            )
+        .form-group 
+            label(for="position") Vị trí
+            input.form-control( 
+                type="number" name="position" id="position" min="1" value=Product.position
+            )
+        .form-group.form-check.form-check-inline 
+            input.form-check-input(
+                type="radio" id="statusActive" name="status" value="active" checked=(Product.status=="active" ? true : false)
+            )
+            label.form-check-label(for="statusActive") Hoạt động
+        .form-group.form-check.form-check-inline.mb-4 
+            input.form-check-input(
+                type="radio" id="statusInactive" name="status" value="inactive" checked=(Product.status=="inactive" ? true : false)
+            )
+            label.form-check-label(for="statusInactive") Dừng hoạt động
+        .form-group 
+            button.btn.btn-primary(
+                type="submit"
+            ) Cập nhật

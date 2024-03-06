@@ -1,0 +1,22 @@
+mixin form-change-multi()
+    form(
+        action=`${path.admin_product}/change-multi?_method=PATCH`
+        method="POST"
+        id="form-change-multi"
+        form-sort-item=""
+    ) 
+        .d-flex.align-items-center 
+            .form-group.me-2
+                select.form-control(name="type")
+                    option(selected="" disable="") --Chọn hành động-- 
+                    option(value="active") Hoạt động 
+                    option(value="inactive") Dừng hoạt động
+                    option(value="delete-all") Xoá mềm tất cả
+            .form-group.me-2
+                input(
+                    type="text" name="ids" value="" class="form-control" hidden
+                )
+            button(
+                type="submit"
+                class="btn btn-primary"
+            ) Áp dụng

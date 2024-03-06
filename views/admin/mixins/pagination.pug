@@ -1,0 +1,64 @@
+mixin pagination(pagination)
+    nav(aria-label="page-navigation")
+        ul.pagination(id="pagination")
+            -var previousPage = parseInt(pagination.currentPage-1)
+            -var nextPage = parseInt(pagination.currentPage+1) 
+            -var totalPages = parseInt(pagination.totalPages)
+            //- button prev 
+            if(pagination.currentPage > 1) 
+                li.page-item 
+                    button(
+                        type="button"
+                        class="btn btn-outline-primary me-1"
+                        button-pagination=previousPage
+                    ) <<  
+            //- button page=1
+            if(pagination.currentPage > 2)
+                li.page-item
+                    button(
+                        type="button"
+                        class="btn btn-outline-primary me-1"
+                        button-pagination="1"
+                    ) 1
+                -if(pagination.currentPage > 3) 
+                    li.page-item
+                        button(
+                            class="btn btn-outline-primary disable me-1"
+                        ) ...
+
+            -for(let i = previousPage ; i <= nextPage;i++) 
+                -if(i > totalPages) 
+                    -continue
+                -if(parseInt(i)==0) 
+                    -i = 1
+                li.page-item 
+                    button(
+                        type="button"
+                        class=`btn ${pagination.currentPage == i ? "btn-primary" : "btn-outline-primary"} me-1`
+                        button-pagination=i
+                    ) #{i}
+
+            //-button end
+            if(pagination.currentPage < pagination.totalPages - 1)
+                -if(pagination.currentPage < pagination.totalPages - 2) 
+                    li.page-item
+                        button(
+                            class="btn btn-outline-primary disable me-1"
+                        ) ...
+                li.page-item
+                    button(
+                        type="button"
+                        class="btn btn-outline-primary me-1"
+                        button-pagination=`${totalPages}`
+                    ) #{totalPages}
+                
+            
+            //- button next
+            if(pagination.currentPage < pagination.totalPages) 
+                li.page-item
+                    button(
+                        type="button"
+                        class="btn btn-outline-primary"
+                        button-pagination=nextPage
+                    ) >> 
+            

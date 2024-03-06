@@ -1,0 +1,16 @@
+mixin form-sort-item()
+    label.form-label(for="form-sort-item") 
+        strong Sắp xếp
+    form(
+        method="GET"
+        id="form-sort-item"
+        form-sort-item=""
+    )
+        select.form-select()
+            option(selected='' disable="") --Chọn--
+            option(value='title-asc') Theo tên từ A-Z
+            option(value='title-desc') Theo tên từ Z-A
+            option(value='position-asc') Theo vị trí tăng dần 
+            option(value='position-desc') Theo vị trí giảm dần 
+            option(value='price-asc') Theo giá tăng dần 
+            option(value='price-desc') Theo giá giảm dần

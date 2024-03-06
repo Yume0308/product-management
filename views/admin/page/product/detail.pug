@@ -1,0 +1,66 @@
+extends ../../layout/defaultLayout.pug
+include ../../mixins/form-search.pug
+include ../../mixins/filterStatus.pug
+include ../../mixins/form-change-status.pug
+include ../../mixins/pagination.pug
+
+block main 
+    +alert-success(4000)
+    +alert-error(4000)
+    +alert-warning(4000)
+    if(product.title) 
+        h1.mb-4 #{product.title}
+    
+    if(product.price) 
+        .mb-4 Giá: 
+            strong #{product.price}
+
+    if(product.stock) 
+        .mb-4 Còn lại: 
+            strong #{product.stock}
+    
+    if(product.description) 
+        .mb-4 Mô tả: 
+            span !{product.description}
+
+    if(product.thumbnail) 
+        .mb-4.me-2 Ảnh minh hoạ:
+            img(
+                src=product.thumbnail 
+                style="width:100px;height:auto"
+            )
+    if(product.status) 
+        span Trạng thái:
+            span(
+                class=`badge ${product.status === "active" ? "bg-success" : "bg-danger"} text-decoration-none`
+            ) #{product.status === "active" ? "Đang hoạt động" : "Đã dừng hoạt động"}
+
+    if(product.position) 
+        .mb-4 Vị trí: 
+            strong #{product.position}
+    
+    if(product.category) 
+        .mb-4 Thể loại: 
+            strong #{product.category}
+
+    if(product.rating) 
+        .mb-4 Đánh giá: 
+            storng #{product.rating}
+    
+    if(product.discountPercentage)
+        .mb-4 Phần trăm giảm giá: 
+            strong #{product.discountPercentage}
+    
+    if(product.images)
+        div(class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3")
+        each item,index in product.images
+            img(
+                class="me-2"
+                src=item 
+                style="width:100px;height:auto"
+            )
+            
+    a(
+        href=`/admin/product/edit/${product.id}`
+        class="btn btn-warning"
+    ) Chỉnh sửa

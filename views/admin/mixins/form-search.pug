@@ -1,0 +1,19 @@
+mixin form-search(keyword="")
+    form.form-group(
+        id="form-search"
+        method="GET"
+        form-search=""
+    )
+        .input-group
+            input(
+                id="input-search",
+                type="text",
+                class="form-control me-2",
+                placeholder="Search..." ,
+                aria-label="Search"
+                value=keyword
+            )
+            .input-group-append
+                button(
+                    class="btn btn-outline-success"
+                ) Tìm

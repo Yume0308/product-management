@@ -1,0 +1,17 @@
+mixin alert-success(time)
+    - if(messages.success) 
+        .message.info   
+            .alert.alert-success(data-time=time show-alert="") #{message.success}
+                span.close-alert x
+
+mixin alert-warning(time)
+    - if(messages.warning) 
+        .message.info   
+            .alert.alert-warning(data-time=time show-alert="") #{message.warning}
+                span.close-alert x
+
+mixin alert-error(time) 
+    - if (messages.error)
+         .message.info
+            .alert.alert-danger(data-time=time show-alert="") #{messages.error} 
+                span.close-alert x 

@@ -1,0 +1,115 @@
+extends ../../layout/defaultLayout.pug
+include ../../mixins/form-search.pug
+include ../../mixins/filterStatus.pug
+include ../../mixins/form-change-status.pug
+include ../../mixins/pagination.pug
+include ../../mixins/form-sort-item.pug
+include ../../mixins/alert.pug
+include ../../mixins/form-change-multi.pug
+include ../../mixins/form-delete-item.pug
+
+block main
+    +alert-success(4000)
+    +alert-error(4000)
+    +alert-warning(4000)
+    .col-4 
+        h1 Trang sản phẩm 
+    .col-8
+
+    .card.mb-3 
+        .card-header Bộ lọc và tìm kiếm
+        .card-body 
+            .row 
+                .col-6
+                    +filterStatus(filterStatus)
+                .col-6  
+                    +form-search(keyword)
+    
+    .card.mb-3 
+        .card-header 
+            strong Tiện ích
+        .card-body 
+            .row.align-items-center
+                .col-4
+                    +form-sort-item() 
+                .col-4 
+                .col-4
+                    a(
+                        href=`${path.admin_product}/create`
+                        button-create-item 
+                        class="btn btn-warning"
+                    ) + Thêm mới
+    .card.mb-3 
+        .card-header 
+            Strong Chỉnh sửa nhiều mục
+        .card-body 
+            .col-6 
+                +form-change-multi()
+            .col-6
+
+    .card.mb-3
+        .card-header 
+            strong Danh sách sản phẩm
+            .card-body   
+                table.table.table-hover.table-sm(checkbox-multi='')
+                    thead 
+                        tr 
+                            th
+                                input(type="checkbox" name="checkbox-all")
+                            th STT 
+                            th Hình ảnh 
+                            th Tiêu đề
+                            th Giá
+                            th % Giảm giá
+                            th Vị trí
+                            th Trạng thái
+                            th Hành động
+                        tbody   
+                            each item,index in products
+                                tr 
+                                    td  
+                                        input(
+                                            type="checkbox" name="checkbox-item" value=item.id
+                                        )
+                                    td  #{(pagination.currentPage-1)*(pagination.limitItems)+index+1}
+                                    td  
+                                        img(
+                                            src=item.thumbnail alt=item.title width="100px" height="auto"
+                                        )
+                                    td #{item.title}
+                                    td #{item.price}$
+                                    td -#{item.discountPercentage}%
+                                    td #{item.position}
+                                    td 
+                                        a(  
+                                            current-status=item.status
+                                            href=`javascript:;`
+                                            class=`badge ${item.status === "active" ? "bg-success" : "bg-danger"} text-decoration-none`
+                                            button-change-status=""
+                                            data-id=item.id
+                                        ) #{item.status === "active" ? "Đang hoạt động" : "Đã dừng hoạt động"}
+                                    td
+                                        .btn
+                                            a(
+                                                href=`${path.admin_product}/detail/${item.id}`
+                                                type="button"
+                                                class="btn btn-outline-info btn-sm me-2"
+                                                button-detail-item=""
+                                                ) Chi tiết
+                                            a(
+                                                href=`${path.admin_product}/edit/${item.id}`
+                                                type="button"
+                                                class="btn btn-warning btn-sm me-2"
+                                                button-edit-item=""
+                                                ) Sửa
+                                            a(
+                                                href="javascript:;"
+                                                type="submit"
+                                                method="POST"
+                                                class="btn btn-danger btn-sm"
+                                                button-delete-item=""
+                                                data-id=item.id
+                                                ) Xoá
+                            +form-change-status()
+                            +form-delete-item()
+    +pagination(pagination)
